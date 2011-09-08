@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# ListBuffer, version 0.1 for WeeChat version 0.3
+# ListBuffer, version 0.2 for WeeChat version 0.3
 # Latest development version: https://github.com/FiXato/listbuffer
 #
 #   Show /list results in a common buffer and interact with them.
@@ -10,28 +10,31 @@
 #   browse with your cursor keys, and join with the enter key.
 #
 # History:
-# 2011-09-08: FiXato:
-#    version 0.1:  initial release.
-#        - added a common buffer for /list results
-#        - added highlighting for currently selected line
-#        - added /join support via enter key
-#        - added scroll_top and scroll_bottom support
-#    version 0.2:  /list format bugfix
-#        - added support for /list results without modes
-#        - some servers don't send 321 (/list start). Taken into account.
+# *   2011-09-08: FiXato:
+#     version 0.1:  initial release.
+#
+#         - added a common buffer for /list results
+#         - added highlighting for currently selected line
+#         - added /join support via enter key
+#         - added scroll_top and scroll_bottom support
+#
+#     version 0.2:  /list format bugfix
+#
+#         - added support for /list results without modes
+#         - some servers don't send 321 (/list start). Taken into account.
 #
 # Acknowledgements:
-#   - Sebastien "Flashcode" Helleu, for developing a kick-ass IRC client
-#     and the iset.pl script which inspired me to this script.
-#   - Nils "nils_2" Görs, for his contributions to iset.pl which served as
-#     example code.
-#   - David "drubin" Rubin, for his urlgrab.py script, which also served
-#     as example code.
-#   - ArZa, whose listsort.pl script helped me getting started with 
-#     grabbing the /list results. Parts of his code have been shamelessly
-#     copied and ported to Python.
-#   - Khaled Mardam-Bey, for making me yearn for similar /list support in 
-#     WeeChat as mIRC already offered. :P
+# * Sebastien "Flashcode" Helleu, for developing the kick-ass IRC client WeeChat
+#    and the iset.pl script which inspired me to this script.
+# * Nils "nils_2" Görs, for his contributions to iset.pl which served as
+#    example code.
+# * David "drubin" Rubin, for his urlgrab.py script, which also served
+#    as example code.
+# * ArZa, whose listsort.pl script helped me getting started with 
+#    grabbing the /list results. Parts of his code have been shamelessly
+#    copied and ported to Python.
+# * Khaled Mardam-Bey, for making me yearn for similar /list support in 
+#    WeeChat as mIRC already offered. :P
 #
 # TODO: 
 #   - Auto-scroll selected line upon window scroll.

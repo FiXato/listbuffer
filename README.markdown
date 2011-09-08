@@ -24,11 +24,17 @@ This is a script for the WeeChat chat client, www.weechat.org
 * Join a channel with the enter key after highlighting its line
 * Scroll to the top/bottom of the channel list
 * Padded channel names, user counts and modes for a clean overview
-
+* Tested (and passed) on the following IRCds:
+    * UnrealIRCd (tested at Chat4All.org)
+    * Charybdis (tested at Esper.net)
+    * ircd-seven-1.0.3 (tested at freenode) 
+    * IRCnet (irc2.11.2p3)
+    * Hybrid (hybrid-7.2.3+plexus-3.0.1) (tested at Rizon.net)
+    * Bahamut (bahamut-1.8(06))
 
 ### Future:
 
-* See ToDo for now
+* See ToDo in listbuffer.py for now
 
 ## History
 ******************************************************************************
@@ -40,6 +46,11 @@ This is a script for the WeeChat chat client, www.weechat.org
         - added highlighting for currently selected line
         - added /join support via enter key
         - added scroll_top and scroll_bottom support
+
+    version 0.2:  /list format bugfix
+
+        - added support for /list results without modes
+        - some servers don't send 321 (/list start). Taken into account.
 
 ## ToDo
 ******************************************************************************
@@ -54,6 +65,11 @@ This is a script for the WeeChat chat client, www.weechat.org
 - Add auto-join support
 - Detect if channel is already in auto-join
 - Allow automatically switching to the listbuffer
+- Add support for ALIS (/squery alis LIST * -mix 100 (IRCNet)
+- Make colours configurable
+- Limit number of channels to parse
+- Add filter support a la iset
+- Allow selecting multiple channels
 
 ## Notes on Patches/Pull Requests
 ******************************************************************************
