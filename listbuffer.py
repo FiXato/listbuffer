@@ -11,11 +11,13 @@
 #
 # History:
 # 2011-09-08: FiXato:
-#   version 0.1:  initial release.
-#                 - added a common buffer for /list results
-#                 - added highlighting for currently selected line
-#                 - added /join support via enter key
-#                 - added scroll_top and scroll_bottom support
+#    version 0.1:  initial release.
+#        - added a common buffer for /list results
+#        - added highlighting for currently selected line
+#        - added /join support via enter key
+#        - added scroll_top and scroll_bottom support
+#    version 0.2:  /list format bugfix
+#        - added support for /list results without modes
 #
 # Acknowledgements:
 #   - Sebastien "Flashcode" Helleu, for developing a kick-ass IRC client
@@ -67,7 +69,7 @@
 #
 SCRIPT_NAME    = "listbuffer"
 SCRIPT_AUTHOR  = "Filip H.F. 'FiXato' Slagter <fixato [at] gmail [dot] com>"
-SCRIPT_VERSION = "0.1"
+SCRIPT_VERSION = "0.2"
 SCRIPT_LICENSE = "MIT"
 SCRIPT_DESC    = "A common buffer for /list output."
 SCRIPT_COMMAND = "listbuffer"
@@ -85,8 +87,8 @@ import re
 lb_buffer = None
 lb_channels = []
 lb_network = None
-#                              server numeric Nick Chan  Users Modes/Topic
-lb_channel_list_expression = '(:\S+) (\d{3}) (\S+) (\S+) (\d+) :\[(.*?)\] ?(.*)'
+#                              server numeric Nick Chan  Users     Modes    Topic
+lb_channel_list_expression = '(:\S+) (\d{3}) (\S+) (\S+) (\d+) :(\[(.*?)\] )?(.*)'
 
 
 # Create listbuffer.
@@ -121,6 +123,7 @@ def lb_list_start(data, signal, message):
 def lb_list_chan(data, signal, message):
   global lb_channels, lb_buffer
   
+  print message
   for chan_data in re.findall(lb_channel_list_expression,message):
     lb_channels.append({
       'server':  chan_data[0][1:-1],
@@ -128,8 +131,9 @@ def lb_list_chan(data, signal, message):
       'nick':    chan_data[2], 
       'channel': chan_data[3], 
       'users':   chan_data[4],
-      'modes':   chan_data[5],
-      'topic':   weechat.hook_modifier_exec("irc_color_decode", "1", chan_data[6])
+      'nomodes': chan_data[5] == '',
+      'modes':   chan_data[6],
+      'topic':   weechat.hook_modifier_exec("irc_color_decode", "1", chan_data[7])
     })
   return weechat.WEECHAT_RC_OK
 
@@ -182,7 +186,8 @@ def lb_line_format(list_data,curr=False):
   if (curr):
     str += weechat.color("yellow,red")
   str += "%s%25s %6s " % (weechat.color("bold"), list_data['channel'], "(%s)" % list_data['users'])
-  str += "%10s: " % ("[%s]" % list_data['modes'])
+  if not list_data['nomodes']:
+    str += "%10s: " % ("[%s]" % list_data['modes'])
   str += "%s" % list_data['topic']
   return str
 
