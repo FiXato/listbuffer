@@ -21,6 +21,9 @@
 # * version 0.2:  /list format bugfix
 #     * added support for /list results without modes
 #     * some servers don't send 321 (/list start). Taken into account.
+# * version 0.3: Sorting support
+#     * Added some basic sorting support. Scroll through sort options
+#        with meta-> and meta-< (users, channel, topic, modes)
 #
 ## Acknowledgements:
 # * Sebastien "Flashcode" Helleu, for developing the kick-ass IRC client WeeChat
@@ -51,6 +54,7 @@
 #   - Limit number of channels to parse
 #   - Add filter support a la iset
 #   - Allow selecting multiple channels
+#   - Sort by integer for user count
 #
 ## Copyright (c) 2011 Filip H.F. "FiXato" Slagter,
 #   <FiXato [at] Gmail [dot] com>
@@ -96,6 +100,14 @@ lb_buffer = None
 lb_channels = []
 lb_network = None
 lb_list_started = False
+lb_current_sort = None
+lb_sort_options = (
+  'users',
+  'channel',
+  'topic',
+  'modes',
+)
+
 #                              server numeric Nick Chan  Users     Modes    Topic
 lb_channel_list_expression = '(:\S+) (\d{3}) (\S+) (\S+) (\d+) :(\[(.*?)\] )?(.*)'
 
@@ -120,6 +132,8 @@ def lb_create_buffer():
     weechat.buffer_set(lb_buffer, "key_bind_meta-ctrl-J", "/listbuffer **enter")
     weechat.buffer_set(lb_buffer, "key_bind_ctrl-M", "/listbuffer **enter")
     weechat.buffer_set(lb_buffer, "key_bind_meta-ctrl-M", "/listbuffer **enter")
+    weechat.buffer_set(lb_buffer, "key_bind_meta->", "/listbuffer **sort_next")
+    weechat.buffer_set(lb_buffer, "key_bind_meta-<", "/listbuffer **sort_previous")
     lb_curline = 0
 
 def lb_list_start(data, signal, message):
@@ -283,6 +297,42 @@ def lb_check_outside_window():
         weechat.command(lb_buffer, "/window scroll +%i"%(lb_curline - start_line_y - chat_height + 1))
     weechat.infolist_free(infolist)
 
+def lb_sort_next():
+  global lb_current_sort, lb_sort_options
+  if lb_current_sort:
+    new_index = lb_sort_options.index(lb_current_sort) + 1
+  else:
+    new_index = 0
+  
+  if len(lb_sort_options) <= new_index:
+    new_index = 0
+
+  print new_index
+  lb_current_sort = lb_sort_options[new_index]
+  lb_sort()
+
+def lb_sort_previous():
+  global lb_current_sort, lb_sort_options
+  if lb_current_sort:
+    new_index = lb_sort_options.index(lb_current_sort) - 1
+  else:
+    new_index = 0
+
+  if new_index < 0:
+    new_index = len(lb_sort_options) - 1
+
+  print new_index
+  lb_current_sort = lb_sort_options[new_index]
+  lb_sort()
+    
+
+def lb_sort(sort_key=None):
+  global lb_channels, lb_current_sort
+  if sort_key:
+    lb_current_sort = sort_key
+  lb_channels = sorted(lb_channels, key=lambda chan_data: chan_data[lb_current_sort])
+  lb_refresh()
+
 def lb_close_cb(*kwargs):
   """ A callback for buffer closing. """
   global lb_buffer
@@ -297,7 +347,9 @@ lb_options = {
   'enter'       : lb_line_run,
   'space'       : lb_line_select,
   'scroll_top'  : lb_scroll_top,
-  'scroll_bottom': lb_scroll_bottom
+  'scroll_bottom': lb_scroll_bottom,
+  'sort_next'   : lb_sort_next,
+  'sort_previous': lb_sort_previous,
 }
 
 def lb_command_main(data, buffer, args):
