@@ -33,8 +33,9 @@ This is a script for the WeeChat chat client, www.weechat.org
 ## History
 ******************************************************************************
 
-* 2011-09-08: FiXato:
+*   2011-09-08: FiXato:
     version 0.1:  initial release.
+
         - added a common buffer for /list results
         - added highlighting for currently selected line
         - added /join support via enter key
@@ -71,6 +72,7 @@ This is a script for the WeeChat chat client, www.weechat.org
 ******************************************************************************
 
 Thanks go out to:
+
 * Sebastien "Flashcode" Helleu, for developing the kick-ass IRC client WeeChat
     and the iset.pl script which inspired me to this script.
 * Nils "nils_2" Görs, for his contributions to iset.pl which served as
