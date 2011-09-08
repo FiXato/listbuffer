@@ -39,18 +39,17 @@ This is a script for the WeeChat chat client, www.weechat.org
 ## History
 ******************************************************************************
 
-*   2011-09-08: FiXato:
-    version 0.1:  initial release.
+### 2011-09-08: FiXato:
 
-        - added a common buffer for /list results
-        - added highlighting for currently selected line
-        - added /join support via enter key
-        - added scroll_top and scroll_bottom support
+* version 0.1:  initial release.
+    * added a common buffer for /list results
+    * added highlighting for currently selected line
+    * added /join support via enter key
+    * added scroll_top and scroll_bottom support
 
-    version 0.2:  /list format bugfix
-
-        - added support for /list results without modes
-        - some servers don't send 321 (/list start). Taken into account.
+* version 0.2:  /list format bugfix
+    * added support for /list results without modes
+    * some servers don't send 321 (/list start). Taken into account.
 
 ## ToDo
 ******************************************************************************

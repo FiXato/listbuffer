@@ -9,21 +9,20 @@
 #   It will open a common buffer for the /list result, through which you
 #   browse with your cursor keys, and join with the enter key.
 #
-# History:
-# *   2011-09-08: FiXato:
-#     version 0.1:  initial release.
+## History:
+### 2011-09-08: FiXato:
+# 
+# * version 0.1:  initial release.
+#     * added a common buffer for /list results
+#     * added highlighting for currently selected line
+#     * added /join support via enter key
+#     * added scroll_top and scroll_bottom support
+# 
+# * version 0.2:  /list format bugfix
+#     * added support for /list results without modes
+#     * some servers don't send 321 (/list start). Taken into account.
 #
-#         - added a common buffer for /list results
-#         - added highlighting for currently selected line
-#         - added /join support via enter key
-#         - added scroll_top and scroll_bottom support
-#
-#     version 0.2:  /list format bugfix
-#
-#         - added support for /list results without modes
-#         - some servers don't send 321 (/list start). Taken into account.
-#
-# Acknowledgements:
+## Acknowledgements:
 # * Sebastien "Flashcode" Helleu, for developing the kick-ass IRC client WeeChat
 #    and the iset.pl script which inspired me to this script.
 # * Nils "nils_2" Görs, for his contributions to iset.pl which served as
@@ -36,7 +35,7 @@
 # * Khaled Mardam-Bey, for making me yearn for similar /list support in 
 #    WeeChat as mIRC already offered. :P
 #
-# TODO: 
+## TODO: 
 #   - Auto-scroll selected line upon window scroll.
 #   - Add option to hide already joined channels.
 #   - Add sorting methods
@@ -53,7 +52,7 @@
 #   - Add filter support a la iset
 #   - Allow selecting multiple channels
 #
-# Copyright (c) 2011 Filip H.F. "FiXato" Slagter,
+## Copyright (c) 2011 Filip H.F. "FiXato" Slagter,
 #   <FiXato [at] Gmail [dot] com>
 #   http://google.com/profiles/FiXato
 #
