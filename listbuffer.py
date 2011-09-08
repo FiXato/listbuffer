@@ -120,7 +120,13 @@ def lb_create_buffer():
     # Sets notify to 0 as this buffer does not need to be in hotlist.
     lb_buffer = weechat.buffer_new("listbuffer", "lb_input_cb", \
                 "", "lb_close_cb", "")
-    weechat.buffer_set(lb_buffer, "title", "/LIST buffer")
+    weechat.buffer_set(lb_buffer, "title", lb_line_format({
+      'channel': 'Channel name', 
+      'users': 'Users',
+      'modes': 'Modes',
+      'topic': 'Topic',
+      'nomodes': None,
+    }))
     weechat.buffer_set(lb_buffer, "notify", "0")
     weechat.buffer_set(lb_buffer, "nicklist", "0")
     weechat.buffer_set(lb_buffer, "type", "free")
@@ -225,7 +231,7 @@ def lb_line_format(list_data,curr=False):
   str = ""
   if (curr):
     str += weechat.color("yellow,red")
-  str += "%s%25s %6s " % (weechat.color("bold"), list_data['channel'], "(%s)" % list_data['users'])
+  str += "%s%25s %7s " % (weechat.color("bold"), list_data['channel'], "(%s)" % list_data['users'])
   if not list_data['nomodes']:
     str += "%10s: " % ("[%s]" % list_data['modes'])
   str += "%s" % list_data['topic']
@@ -307,7 +313,6 @@ def lb_sort_next():
   if len(lb_sort_options) <= new_index:
     new_index = 0
 
-  print new_index
   lb_current_sort = lb_sort_options[new_index]
   lb_sort()
 
@@ -321,7 +326,6 @@ def lb_sort_previous():
   if new_index < 0:
     new_index = len(lb_sort_options) - 1
 
-  print new_index
   lb_current_sort = lb_sort_options[new_index]
   lb_sort()
     
