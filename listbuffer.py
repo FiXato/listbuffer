@@ -18,6 +18,7 @@
 #        - added scroll_top and scroll_bottom support
 #    version 0.2:  /list format bugfix
 #        - added support for /list results without modes
+#        - some servers don't send 321 (/list start). Taken into account.
 #
 # Acknowledgements:
 #   - Sebastien "Flashcode" Helleu, for developing a kick-ass IRC client
@@ -43,6 +44,7 @@
 #   - Add auto-join support
 #   - Detect if channel is already in auto-join
 #   - Allow automatically switching to the listbuffer
+#   - Add support for ALIS (/squery alis LIST * -mix 100 (IRCNet)
 #
 # Copyright (c) 2011 Filip H.F. "FiXato" Slagter,
 #   <FiXato [at] Gmail [dot] com>
@@ -87,6 +89,7 @@ import re
 lb_buffer = None
 lb_channels = []
 lb_network = None
+lb_list_started = False
 #                              server numeric Nick Chan  Users     Modes    Topic
 lb_channel_list_expression = '(:\S+) (\d{3}) (\S+) (\S+) (\d+) :(\[(.*?)\] )?(.*)'
 
@@ -114,14 +117,27 @@ def lb_create_buffer():
     lb_curline = 0
 
 def lb_list_start(data, signal, message):
-  global lb_channels, lb_network
+  lb_initialise_list
+
+  return weechat.WEECHAT_RC_OK
+
+def lb_initialise_list(signal):
+  global lb_channels, lb_network, lb_list_started
+
   lb_create_buffer()
   lb_channels = []
   lb_network = signal.split(',')[0]
-  return weechat.WEECHAT_RC_OK
+  lb_list_started = True
+
+  return
+
 
 def lb_list_chan(data, signal, message):
-  global lb_channels, lb_buffer
+  global lb_channels, lb_buffer, lb_list_started
+
+  # Work-around for IRCds which don't send 321 Numeric (/List start)
+  if not lb_list_started:
+    lb_initialise_list(signal)
   
   for chan_data in re.findall(lb_channel_list_expression,message):
     lb_channels.append({
@@ -138,9 +154,13 @@ def lb_list_chan(data, signal, message):
 
 
 def lb_list_end(data, signal, message):
-  global lb_channels
-  global lb_buffer
+  global lb_list_started
 
+  # Work-around for IRCds which don't send 321 Numeric (/List start)
+  if not lb_list_started:
+    lb_initialise_list(signal)
+
+  lb_list_started = False
   lb_refresh()
   return weechat.WEECHAT_RC_OK
 
@@ -157,7 +177,8 @@ def lb_input_cb(data, buffer, input_data):
   return weechat.WEECHAT_RC_OK
   
 def lb_refresh():
-  global lb_channels
+  global lb_channels, lb_buffer
+  weechat.buffer_clear(lb_buffer)
 
   y = 0
   for list_data in lb_channels:
