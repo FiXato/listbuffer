@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # ListBuffer, version 0.1 for WeeChat version 0.3
+# Latest development version: https://github.com/FiXato/listbuffer
 #
 #   Show /list results in a common buffer and interact with them.
 #
