@@ -45,6 +45,10 @@
 #   - Detect if channel is already in auto-join
 #   - Allow automatically switching to the listbuffer
 #   - Add support for ALIS (/squery alis LIST * -mix 100 (IRCNet)
+#   - Make colours configurable
+#   - Limit number of channels to parse
+#   - Add filter support a la iset
+#   - Allow selecting multiple channels
 #
 # Copyright (c) 2011 Filip H.F. "FiXato" Slagter,
 #   <FiXato [at] Gmail [dot] com>
