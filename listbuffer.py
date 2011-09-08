@@ -123,7 +123,6 @@ def lb_list_start(data, signal, message):
 def lb_list_chan(data, signal, message):
   global lb_channels, lb_buffer
   
-  print message
   for chan_data in re.findall(lb_channel_list_expression,message):
     lb_channels.append({
       'server':  chan_data[0][1:-1],
