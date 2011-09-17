@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 #
-# ListBuffer, version 0.2 for WeeChat version 0.3
+# ListBuffer, version 0.3 for WeeChat version 0.3
 # Latest development version: https://github.com/FiXato/listbuffer
 #
 #   Show /list results in a common buffer and interact with them.
 #
 #   This script allows you to easily join channels from the /list output.
 #   It will open a common buffer for the /list result, through which you
-#   browse with your cursor keys, and join with the enter key.
+#   browse with your cursor keys, and join with the meta-enter keys.
 #
 ## History:
 ### 2011-09-08: FiXato:
@@ -21,9 +21,16 @@
 # * version 0.2:  /list format bugfix
 #     * added support for /list results without modes
 #     * some servers don't send 321 (/list start). Taken into account.
+#
 # * version 0.3: Sorting support
 #     * Added some basic sorting support. Scroll through sort options
 #        with meta-> and meta-< (users, channel, topic, modes)
+#
+###
+#
+# * version 0.4: 
+#     * Case-insensitive buffer lookup fix.
+#     * Removed default enter keybind
 #
 ## Acknowledgements:
 # * Sebastien "Flashcode" Helleu, for developing the kick-ass IRC client WeeChat
@@ -81,7 +88,7 @@
 #
 SCRIPT_NAME    = "listbuffer"
 SCRIPT_AUTHOR  = "Filip H.F. 'FiXato' Slagter <fixato [at] gmail [dot] com>"
-SCRIPT_VERSION = "0.2"
+SCRIPT_VERSION = "0.3"
 SCRIPT_LICENSE = "MIT"
 SCRIPT_DESC    = "A common buffer for /list output."
 SCRIPT_COMMAND = "listbuffer"
@@ -136,7 +143,6 @@ def lb_create_buffer():
     weechat.buffer_set(lb_buffer, "key_bind_meta2-1~", "/listbuffer **scroll_top")
     weechat.buffer_set(lb_buffer, "key_bind_meta2-4~", "/listbuffer **scroll_bottom")
     weechat.buffer_set(lb_buffer, "key_bind_meta-ctrl-J", "/listbuffer **enter")
-    weechat.buffer_set(lb_buffer, "key_bind_ctrl-M", "/listbuffer **enter")
     weechat.buffer_set(lb_buffer, "key_bind_meta-ctrl-M", "/listbuffer **enter")
     weechat.buffer_set(lb_buffer, "key_bind_meta->", "/listbuffer **sort_next")
     weechat.buffer_set(lb_buffer, "key_bind_meta-<", "/listbuffer **sort_previous")
@@ -260,10 +266,10 @@ def lb_line_down():
 def lb_line_run():
   global lb_channels, lb_curline, lb_network
 
-  buffer = weechat.buffer_search("irc", "server.%s" % lb_network)
+  buff = weechat.info_get("irc_buffer", lb_network)
   channel = lb_channels[lb_curline]['channel']
   command = "/join %s" % channel
-  weechat.command(buffer, command)
+  weechat.command(buff, command)
   return
 
 def lb_line_select():
