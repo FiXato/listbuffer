@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# ListBuffer, version 0.3 for WeeChat version 0.3
+# ListBuffer, version 0.5 for WeeChat version 0.3
 # Latest development version: https://github.com/FiXato/listbuffer
 #
 #   Show /list results in a common buffer and interact with them.
@@ -8,6 +8,7 @@
 #   This script allows you to easily join channels from the /list output.
 #   It will open a common buffer for the /list result, through which you
 #   browse with your cursor keys, and join with the meta-enter keys.
+#   Adjust sorting with meta->, meta-< and meta-/ keybindings.
 #
 ## History:
 ### 2011-09-08: FiXato:
@@ -24,15 +25,22 @@
 #
 # * version 0.3: Sorting support
 #     * Added some basic sorting support. Scroll through sort options
-#        with meta-> and meta-< (users, channel, topic, modes)
+#       with meta-> and meta-< (users, channel, topic, modes)
 #
-###
+### 2011-09-19: FiXato
 #
 # * version 0.4: 
 #     * Case-insensitive buffer lookup fix.
 #     * Removed default enter keybind
 #
+### 2011-12-28: troydm:
+#
+# * version 0.5: It's an upside-down-world
+#     * Added inverted sorting support provided by Dmitry "troydm" Geurkov
+#       Use meta-/ to switch between inverted and regular sorting.
+#
 ## Acknowledgements:
+# * Dmitry "troydm" Geurkov, for providing the inverse-sorting patch to the project.
 # * Sebastien "Flashcode" Helleu, for developing the kick-ass IRC client WeeChat
 #    and the iset.pl script which inspired me to this script.
 # * Nils "nils_2" Görs, for his contributions to iset.pl which served as
@@ -48,7 +56,7 @@
 ## TODO: 
 #   - Auto-scroll selected line upon window scroll.
 #   - Add option to hide already joined channels.
-#   - Add sorting methods
+#   - Improve sorting methods
 #   - Add default sorting option
 #   - Add channel padding length option
 #   - Add usercount padding length option
@@ -89,7 +97,7 @@
 #
 SCRIPT_NAME    = "listbuffer"
 SCRIPT_AUTHOR  = "Filip H.F. 'FiXato' Slagter <fixato [at] gmail [dot] com>"
-SCRIPT_VERSION = "0.3"
+SCRIPT_VERSION = "0.5"
 SCRIPT_LICENSE = "MIT"
 SCRIPT_DESC    = "A common buffer for /list output."
 SCRIPT_COMMAND = "listbuffer"

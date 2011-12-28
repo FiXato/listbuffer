@@ -1,4 +1,4 @@
-# listbuffer.py, version 0.1 for WeeChat version 0.3
+# listbuffer.py, version 0.5 for WeeChat version 0.3
 ******************************************************************************
 
 Show /list results in a common buffer and interact with them.
@@ -6,6 +6,7 @@ Show /list results in a common buffer and interact with them.
 This script allows you to easily join channels from the /list output. 
 It will open a common buffer for the /list result, through which you 
 browse with your cursor keys, and join with the enter key.
+Adjust sorting with meta->, meta-< and meta-/ keybindings.
 
 This is a script for the WeeChat chat client, www.weechat.org
 
@@ -23,6 +24,7 @@ This is a script for the WeeChat chat client, www.weechat.org
 * Navigate through the channels with your cursor keys
 * Join a channel with the enter key after highlighting its line
 * Scroll to the top/bottom of the channel list
+* Invert the sort order of the channel list
 * Padded channel names, user counts and modes for a clean overview
 * Tested (and passed) on the following IRCds:
     * UnrealIRCd (tested at Chat4All.org)
@@ -51,12 +53,28 @@ This is a script for the WeeChat chat client, www.weechat.org
     * added support for /list results without modes
     * some servers don't send 321 (/list start). Taken into account.
 
+* version 0.3: Sorting support
+    * Added some basic sorting support. Scroll through sort options
+      with meta-> and meta-< (users, channel, topic, modes)
+
+### 2011-09-19: FiXato:
+
+* version 0.4: 
+   * Case-insensitive buffer lookup fix.
+   * Removed default enter keybind
+
+### 2011-12-28: troydm:
+
+* version 0.5: It's an upside-down-world
+   * Added inverted sorting support provided by Dmitry "troydm" Geurkov
+     Use meta-/ to switch between inverted and regular sorting.
+
 ## ToDo
 ******************************************************************************
 
 - Auto-scroll selected line upon window scroll.
 - Add option to hide already joined channels.
-- Add sorting methods
+- Improve sorting methods
 - Add default sorting option
 - Add channel padding length option
 - Add usercount padding length option
@@ -75,7 +93,7 @@ This is a script for the WeeChat chat client, www.weechat.org
 
 1. Fork the project.
 2. Make your feature addition or bug fix.
-3. Add tests for it (even though I don't have tests myself at the moment). 
+3. Preferably add tests for it (even though I don't have tests myself at the moment). 
   This is important so I don't break it in a future version unintentionally.
 4. Commit, but do not mess with gemspec, version, history, or README.
   Want to have your own version? Bump version in a separate commit!
@@ -88,6 +106,7 @@ This is a script for the WeeChat chat client, www.weechat.org
 
 Thanks go out to:
 
+* Dmitry "troydm" Geurkov, for providing the inverse-sorting patch to the project.
 * Sebastien "Flashcode" Helleu, for developing the kick-ass IRC client WeeChat
     and the iset.pl script which inspired me to this script.
 * Nils "nils_2" Görs, for his contributions to iset.pl which served as
