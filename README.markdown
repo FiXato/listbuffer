@@ -1,11 +1,15 @@
-# listbuffer.py, version 0.5 for WeeChat version 0.3
+# DEPRECATED
+
+This repository is no longer maintained. Please see https://github.com/FiXato/weechat_scripts instead.
+
+# listbuffer.py, version 0.8.1 for WeeChat version 0.3
 ******************************************************************************
 
 Show /list results in a common buffer and interact with them.
 
-This script allows you to easily join channels from the /list output. 
-It will open a common buffer for the /list result, through which you 
-browse with your cursor keys, and join with the enter key.
+This script allows you to easily join channels from the /list output.
+It will open a common buffer for the /list result, through which you
+browse with your cursor keys, and join with the meta-enter keys.
 Adjust sorting with meta->, meta-< and meta-/ keybindings.
 
 This is a script for the WeeChat chat client, www.weechat.org
@@ -57,36 +61,62 @@ This is a script for the WeeChat chat client, www.weechat.org
     * Added some basic sorting support. Scroll through sort options
       with meta-> and meta-< (users, channel, topic, modes)
 
-### 2011-09-19: FiXato:
+### 2011-09-19: FiXato
 
 * version 0.4: 
-   * Case-insensitive buffer lookup fix.
-   * Removed default enter keybind
+    * Case-insensitive buffer lookup fix.
+    * Removed default enter keybind
 
 ### 2011-12-28: troydm:
 
 * version 0.5: It's an upside-down-world
-   * Added inverted sorting support provided by Dmitry "troydm" Geurkov
-     Use meta-/ to switch between inverted and regular sorting.
+    * Added inverted sorting support provided by Dmitry "troydm" Geurkov
+      Use meta-/ to switch between inverted and regular sorting.
+
+### 2012-02-10: FiXato:
+
+* version 0.6: Stop shoving that buffer in my face!
+    * The listbuffer should no longer pop up by itself when you load the script.
+      It should only pop up now when you actually do a /list query.
+
+* version 0.7: .. but please pop it up in my current window when I ask for it
+    * Added setting plugins.var.python.listbuffer.autofocus
+      This will autofocus the listbuffer in the current window if another window isn't
+      already showing it, and of course only when the user issues /list
+
+### 2012-07-10: FiXato:
+
+* version 0.7.1: Forgetful bugfix
+    * Made sure lb_curline global variable is defined
+
+### 2013-03-19: FiXato:
+
+* version 0.8: Sorted out the sorting
+    * Added automatically updating options for sorting: 
+      * plugins.var.python.listbuffer.sort_inverted
+      * plugins.var.python.listbuffer.sort_order 
+* version 0.8.1: Pad it baby!
+    * Channel modes are equally padded even when there are no channel modes.
+    * Added padding options: 
+      * plugins.var.python.listbuffer.modes_min_width
+      * plugins.var.python.listbuffer.channel_min_width
+      * plugins.var.python.listbuffer.users_min_width
 
 ## ToDo
 ******************************************************************************
 
-- Auto-scroll selected line upon window scroll.
-- Add option to hide already joined channels.
-- Improve sorting methods
-- Add default sorting option
-- Add channel padding length option
-- Add usercount padding length option
-- Add modes padding length option
-- Add auto-join support
-- Detect if channel is already in auto-join
-- Allow automatically switching to the listbuffer
-- Add support for ALIS (/squery alis LIST * -mix 100 (IRCNet)
-- Make colours configurable
-- Limit number of channels to parse
-- Add filter support a la iset
-- Allow selecting multiple channels
+  - Auto-scroll selected line upon window scroll.
+  - Add option to hide already joined channels.
+  - Improve sorting methods
+  - Add auto-join support
+  - Detect if channel is already in auto-join
+  - Allow automatically switching to the listbuffer
+  - Add support for ALIS (/squery alis LIST * -mix 100 (IRCNet)
+  - Make colours configurable
+  - Limit number of channels to parse
+  - Add filter support a la iset
+  - Allow selecting multiple channels
+  - Add optional command redirection.
 
 ## Notes on Patches/Pull Requests
 ******************************************************************************
@@ -118,13 +148,13 @@ Thanks go out to:
     copied and ported to Python.
 * Khaled Mardam-Bey, for making me yearn for similar /list support in 
     WeeChat as mIRC already offered. :P
-
+* mave_, for pointing out that sort orders weren't remembered.
 
 ## Copyright
 ******************************************************************************
 
-Copyright (c) 2011 Filip H.F. "FiXato" Slagter,
+Copyright (c) 2011,2012,2013 Filip H.F. "FiXato" Slagter,
     <FiXato [at] Gmail [dot] com>
-    http://google.com/profiles/FiXato
+    http://profile.fixato.org
 
 See LICENSE for details.
